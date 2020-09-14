@@ -6,19 +6,17 @@ import logging
 
 def download(url: str) -> None:
     ydl_opts = {
-        'audio_format': 'mp3',
+        'audio-format': 'mp3',
+        # 'output': '%(title)s.%(ext)s',
         'extract-audio': True,
         'ignore-errors': True
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        x = ydl.extract_info(url, download=False)
+        metadata = ydl.extract_info(url, download=False)
         # from pprint import pprint
         # pprint(x)
         ydl.download([url])
-    return x['title']
-
-
-# download('https://www.youtube.com/watch?v=lr9CmQ7XqS0')
+    return metadata['title']
 
 
 def download_and_send(updater, context):
